@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Royal Bike Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #3b0a45; /* Maroon dark background */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mx-auto px-4 py-12">
+        <div class="mb-6">
+            <a href="javascript:history.back()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition duration-300">
+                Go Back
+            </a>
+        </div>
+        <h1 class="text-4xl font-bold text-center text-white mb-8">Custom Bike Tours</h1>
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Tailored Tours Just for You</h2>
+            <p class="text-gray-600 mb-4">Experience the thrill of biking in a way that suits you:</p>
+            <ul class="list-disc list-inside mb-4">
+                <li>Choose your destination and route.</li>
+                <li>Select your riding pace and duration.</li>
+                <li>Receive guidance from experienced tour leaders.</li>
+                <li>Enjoy personalized itineraries for groups or solo riders.</li>
+                <li>Immerse yourself in local culture and sights along the way.</li>
+            </ul>
+            <a href="/register-custom-tour" class="block bg-red-500 text-white text-center py-2 rounded-lg hover:bg-black transition duration-300">
+                Start Planning Your Tour
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

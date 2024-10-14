@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Royal Bike Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .card {
+            background: linear-gradient(145deg, #e6e6e6, #ffffff);
+            border-radius: 15px;
+            box-shadow:  8px 8px 15px #c4c4c4,
+                        -8px -8px 15px #ffffff;
+        }
+        .input-field {
+            transition: border-color 0.3s;
+        }
+        .input-field:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+        .error {
+            color: red;
+            font-size: 0.875rem;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-gray-200">
+    <div class="container mx-auto p-6">
+        <div class="flex justify-between mb-4">
+            <h1 class="text-3xl font-semibold">Payment Page</h1>
+            <a href="/buy-now/:id" class="text-white bg-blue-600 hover:bg-blue-700 transition duration-300 px-4 py-2 rounded-lg">Go Back</a>
+        </div>
+        <div class="card p-6 rounded-lg shadow-lg max-w-lg mx-auto">
+            <p class="text-gray-700 mb-4">Please fill in your payment details below.</p>
+            <form id="payment-form" action="/process-purchase" method="POST">
+                <!-- Name on Card -->
+                <div class="mb-4">
+                    <label for="cardName" class="block text-gray-700 font-medium mb-2">Name on Card</label>
+                    <input type="text" id="cardName" name="cardName" required
+                           class="input-field w-full p-2 border border-gray-300 rounded-lg" placeholder="John Doe">
+                    <span class="error" id="cardNameError"></span>
+                </div>
+
+                <!-- Card Number -->
+                <div class="mb-4">
+                    <label for="cardNumber" class="block text-gray-700 font-medium mb-2">Card Number</label>
+                    <input type="text" id="cardNumber" name="cardNumber" required maxlength="19"
+                           class="input-field w-full p-2 border border-gray-300 rounded-lg" placeholder="1234 5678 9123 4567" oninput="formatCardNumber(this)">
+                    <span class="error" id="cardNumberError"></span>
+                </div>
+
+                <!-- Expiration Date -->
+                <div class="mb-4">
+                    <label for="expiryDate" class="block text-gray-700 font-medium mb-2">Expiration Date</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="expiryMonth" name="expiryMonth" required maxlength="2"
+                               class="input-field w-1/2 p-2 border border-gray-300 rounded-lg" placeholder="MM" oninput="formatExpiry(this)">
+                        <input type="text" id="expiryYear" name="expiryYear" required maxlength="2"
+                               class="input-field w-1/2 p-2 border border-gray-300 rounded-lg" placeholder="YY">
+                    </div>
+                    <span class="error" id="expiryError"></span>
+                </div>
+
+                <!-- CVV -->
+                <div class="mb-4">
+                    <label for="cvv" class="block text-gray-700 font-medium mb-2">CVV</label>
+                    <input type="text" id="cvv" name="cvv" required maxlength="3"
+                           class="input-field w-full p-2 border border-gray-300 rounded-lg" placeholder="123">
+                    <span class="error" id="cvvError"></span>
+                </div>
+
+                <!-- Hidden Inputs -->
+                <input type="hidden" name="bikeId" value="<%= bike._id %>">
+                
+                <!-- Submit Button -->
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-200">Submit Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to format card number
+        function formatCardNumber(input) {
+            const value = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            const formattedValue = value.match(/.{1,4}/g)?.join(' ') || '';
+            input.value = formattedValue;
+        }
+
+        // Function to format expiry date
+        function formatExpiry(input) {
+            const value = input.value.replace(/[^0-9]/g, '');
+            if (value.length >= 2) {
+                input.value = value.slice(0, 2);
+                document.getElementById('expiryYear').focus();
+            }
+        }
+
+        // Form validation
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            let valid = true;
+            clearErrors();
+
+            // Validate Card Name
+            const cardName = document.getElementById('cardName').value;
+            if (!cardName) {
+                showError('cardNameError', 'Card name is required.');
+                valid = false;
+            }
+
+            // Validate Card Number
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+            if (cardNumber.length !== 16) {
+                showError('cardNumberError', 'Card number must be 16 digits.');
+                valid = false;
+            }
+
+            // Validate Expiration Date
+            const expiryMonth = document.getElementById('expiryMonth').value;
+            const expiryYear = document.getElementById('expiryYear').value;
+            if (!expiryMonth || !expiryYear) {
+                showError('expiryError', 'Expiration date is required.');
+                valid = false;
+            }
+
+            // Validate CVV
+            const cvv = document.getElementById('cvv').value;
+            if (cvv.length !== 3) {
+                showError('cvvError', 'CVV must be 3 digits.');
+                valid = false;
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+
+        function showError(elementId, message) {
+            document.getElementById(elementId).innerText = message;
+        }
+
+        function clearErrors() {
+            const errorElements = document.querySelectorAll('.error');
+            errorElements.forEach(el => el.innerText = '');
+        }
+    </script>
+</body>
+</html>

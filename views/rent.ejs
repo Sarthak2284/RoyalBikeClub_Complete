@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent a Bike</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .card {
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 16px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Flex container for alignment -->
+        <div class="flex items-center mb-6">
+            <!-- Go Back Button -->
+            <a href="javascript:history.back()"
+               class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm rounded-lg shadow-md mr-4">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Go Back
+            </a>
+            <!-- Heading -->
+            <h1 class="text-3xl font-bold text-center text-gray-800 flex-1">Rent a Bike</h1>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% bikes.forEach(bike => { %>
+                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden card">
+                    <img src="<%= bike.image %>" class="w-full h-48 object-cover" alt="<%= bike.name %>">
+                    <div class="card-content">
+                        <h5 class="text-xl font-semibold mb-2"><%= bike.name %></h5>
+                        <p class="mb-2">Price: ₹<%= bike.rentalPrice %> per day</p>
+                        <p class="mb-2">Category: <%= bike.category %></p>
+                        <p class="mb-4"><%= bike.description %></p>
+                        <a href="/rent-now/<%= bike._id %>" class="block bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-blue-600">Rent Now</a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+
+</html>

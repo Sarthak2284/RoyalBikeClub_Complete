@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Transactions - RBC Bike Showroom</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 60px;
+        }
+        .transaction-card {
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .transaction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .transaction-card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+        .transaction-card-body {
+            padding: 1.25rem;
+        }
+        .transaction-card-body p {
+            margin-bottom: 0.5rem;
+        }
+        .transaction-details {
+            background-color: #e9ecef;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin-top: 1rem;
+        }
+        .highlight {
+            color: #007bff;
+            font-weight: 500;
+        }
+        .go-back-btn {
+            margin-bottom: 20px; /* Space between button and transactions */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/welcome" class="btn btn-primary go-back-btn">
+            Go Back
+        </a>
+        <h1 class="mb-4 text-center">My Transactions</h1>
+        <% transactions.forEach(transaction => { %>
+            <div class="transaction-card">
+                <div class="transaction-card-header">
+                    Transaction ID: <%= transaction._id %>
+                </div>
+                <div class="transaction-card-body">
+                    <p><strong>Type:</strong> <span class="highlight">Purchase</span></p> <!-- Hardcoded to 'Purchase' -->
+                    <!-- <p><strong>User Name:</strong> <%= transaction.userName %></p> -->
+                    <p><strong>Total Price:</strong> <span class="highlight">₹<%= transaction.totalPrice %></span></p>
+                    <p><strong>Date:</strong> <span class="highlight"><%= new Date(transaction.date).toLocaleDateString() %></span></p>
+                    <% if (transaction.bikeId) { %>
+                        <div class="transaction-details">
+                            <p><strong>Bike:</strong> <span class="highlight"><%= transaction.bikeId.name %></span></p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

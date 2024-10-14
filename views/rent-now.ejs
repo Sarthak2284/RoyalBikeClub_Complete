@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent a Bike - Royal Bike Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            display: flex; /* Use flexbox for card layout */
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .card img {
+            max-height: 150px; /* Reduced image height */
+            object-fit: cover;
+            width: 150px; /* Set a fixed width for images */
+        }
+        .card-body {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: flex;
+            flex-direction: column; /* Flex direction for vertical stacking */
+            justify-content: space-between; /* Space between content */
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .card-info {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-grow: 1; /* Allow this section to grow */
+        }
+        .card-info h5, .card-info p {
+            margin: 0;
+        }
+        .go-back-btn {
+            margin-bottom: 20px; /* Space below the button */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-3">
+        <h1>Rent a Bike - Royal Bike Club</h1>
+    </header>
+    <div class="container mt-5">
+        <a href="/rent" class="btn btn-secondary go-back-btn">
+            Go Back
+        </a>
+        <div class="row">
+            <% bike.forEach(bike => { %>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="<%= bike.image %>" class="card-img-top" alt="<%= bike.name %>">
+                        <div class="card-body">
+                            <div class="card-info">
+                                <h5 class="card-title"><%= bike.name %></h5>
+                                <p class="card-text">Rental Price: ₹<%= bike.rentalPrice %> per day</p>
+                                <p class="card-text">Category: <%= bike.category %></p>
+                                <p class="card-text"><%= bike.description %></p>
+                                <a href="/rent-now/<%= bike._id %>" class="btn btn-warning">Rent Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
