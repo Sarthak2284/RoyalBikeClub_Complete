@@ -7,7 +7,7 @@ const app = express();
 const indexRouter = require('./routes/index');
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/royalBikeClub', {
+mongoose.connect('mongodb+srv://sarthakjm2284:sarthakjm2284@cluster0.aymtu.mongodb.net/bikes_complete?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
