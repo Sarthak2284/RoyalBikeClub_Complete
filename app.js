@@ -26,7 +26,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost:27017/royalBikeClub',
+        mongoUrl: 'mongodb+srv://sarthakjm2284:sarthakjm2284@cluster0.aymtu.mongodb.net/bikes_complete?retryWrites=true&w=majority&appName=Cluster0',
         collectionName: 'sessions', // Name of the collection to store sessions
         ttl: 14 * 24 * 60 * 60 // = 14 days. Default is 14 days
     }),
